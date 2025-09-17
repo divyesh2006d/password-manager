@@ -1,6 +1,14 @@
 from tkinter import *
 from tkinter import messagebox
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+import random
+
+def generate_password():
+    password = ''.join(random.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*") for _ in range(12))
+    inp_passw.delete(0, END)   # clear old password
+    inp_passw.insert(0, password)
+    window.clipboard_clear()   # copy to clipboard automatically
+    window.clipboard_append(password)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
@@ -21,7 +29,7 @@ def save():
 
 window = Tk()
 window.title('Password Manager')
-window.config(padx=20, pady=20)
+window.config(padx=10, pady=10)
 
 image = PhotoImage(file='logo.png')
 
@@ -39,23 +47,24 @@ email.grid(row=2, column=0)
 passw = Label(window, text='Password :')
 passw.grid(row=3, column=0)
 
+# inputs
+inp_web = Entry(width=52)
+inp_web.grid(row=1, column=1, columnspan=2)
+inp_web.focus()
+
+inp_email = Entry(width=52)
+inp_email.grid(row=2, column=1,columnspan=2)
+inp_email.insert(0,'divyesh@gmail.com')
+
+inp_passw = Entry(width=34)
+inp_passw.grid(row=3, column=1,columnspan=1)
+
+
 # butten
 G_btn = Button(text='Generate Password', command=generate_password)
 G_btn.grid(row=3, column=2)
 
-add_btn = Button(text='Add Password', command=save,width=36)
+add_btn = Button(text='Add Password', command=save,width=44)
 add_btn.grid(row=4, column=1,columnspan=2)
-
-# inputs
-inp_web = Entry(width=35)
-inp_web.grid(row=1, column=1, columnspan=2)
-inp_web.focus()
-
-inp_email = Entry(width=35)
-inp_email.grid(row=2, column=1,columnspan=2)
-inp_email.insert(0,'divyesh@gmail.com')
-
-inp_passw = Entry(width=21)
-inp_passw.grid(row=3, column=1)
 
 window.mainloop()
