@@ -1,1 +1,18 @@
-{"local": {"email": "divyesh@gmail.com", "password": "9d@@q%BHdx#6"}}
+{
+    "local": {
+        "email": "divyesh@gmail.com",
+        "password": "9d@@q%BHdx#6"
+    },
+    "facebook": {
+        "email": "divyesh@gmail.com",
+        "password": "G1!e9ovpGOCF"
+    },
+    "donlus": {
+        "email": "divyesh@gmail.com",
+        "password": "D9gE^2pzAnse"
+    },
+    "java": {
+        "email": "divyesh@gmail.com",
+        "password": "CzuOwlWlE@B!"
+    }
+}

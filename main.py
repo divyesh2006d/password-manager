@@ -48,6 +48,27 @@ def save():
                 inp_web.delete(0, END)
                 inp_passw.delete(0, END)
 
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = inp_web.get()
+    try:
+        with open('data.json', 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No data File found.")
+    else:
+        if website in data:
+            emails = data[website]['email']
+            password = data[website]['password']
+            messagebox.showinfo(title=website,
+                                   message=f'Email: {emails}\nPassword: {password}')
+        else:
+            messagebox.showwarning(title='oops..', message=f'{website} is not found')
+    finally:
+        inp_web.delete(0, END)
+        inp_passw.delete(0, END)
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -85,10 +106,13 @@ inp_passw.grid(row=3, column=1,columnspan=1)
 
 
 # butten
-G_btn = Button(text='Generate Password', command=generate_password)
+G_btn = Button(text='Generate Password', command=generate_password,bg='green')
 G_btn.grid(row=3, column=2)
 
-add_btn = Button(text='Add Password', command=save,width=44)
+add_btn = Button(text='Add Password', command=save,width=44,bg='blue')
 add_btn.grid(row=4, column=1,columnspan=2)
+
+search_btn = Button(text='Search ', command=find_password,width=14,bg='green')
+search_btn.grid(row=1, column=2,columnspan=2)
 
 window.mainloop()
