@@ -13,30 +13,42 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
+    website = inp_web.get()
+    emails = inp_email.get()
+    password = inp_passw.get()
 
-    # messagebox.showinfo('Info', 'Password has been saved.')
     new_data = {
-        inp_web.get():{
-            'email': inp_email.get(),
-            'password': inp_passw.get()
+        website: {
+            'email': emails,
+            'password': password
         }
     }
 
-    if len(inp_web.get()) != 0 and len(inp_passw.get()) != 0:
-        messagebox.askokcancel(title= f'{inp_web.get()}', message=f'These are the details entered :\n Email : {inp_email.get()}\n'
-                                                  f'Password : {inp_passw.get()} \n it is ok to save ?')
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showwarning(title="Oops", message="Please don't leave Website or Password empty!")
     else:
-        messagebox.showerror('Error', 'Something went wrong.')
+        is_ok = messagebox.askokcancel(
+            title=website,
+            message=f"These are the details entered:\nEmail: {emails}\nPassword: {password}\nIs it ok to save?"
+        )
 
-    with open('data.json', 'r') as file:
-        data = json.load(file)
-        data.update(new_data)
+        if is_ok:
+            try:
+                with open('data.json', 'r') as file:
+                    data = json.load(file)
+            except FileNotFoundError:
+                with open('data.json', 'w') as file:
+                    json.dump(new_data, file,indent=4)
+            else:
+                data.update(new_data)
 
-    with open('data.json', 'w') as file:
-        json.dump(data, file, indent=4)
+                with open('data.json', 'w') as file:
+                    json.dump(data, file, indent=4)
+            finally:
+                inp_web.delete(0, END)
+                inp_passw.delete(0, END)
 
-    inp_web.delete(0, END)
-    inp_passw.delete(0, END)
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
