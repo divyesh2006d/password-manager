@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 import random
 
@@ -14,6 +15,12 @@ def generate_password():
 def save():
 
     # messagebox.showinfo('Info', 'Password has been saved.')
+    new_data = {
+        inp_web.get():{
+            'email': inp_email.get(),
+            'password': inp_passw.get()
+        }
+    }
 
     if len(inp_web.get()) != 0 and len(inp_passw.get()) != 0:
         messagebox.askokcancel(title= f'{inp_web.get()}', message=f'These are the details entered :\n Email : {inp_email.get()}\n'
@@ -21,8 +28,13 @@ def save():
     else:
         messagebox.showerror('Error', 'Something went wrong.')
 
-    with open('password.txt', 'a') as file:
-        file.write(f'{inp_web.get()},{inp_email.get()},{inp_passw.get()}\n')
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+        data.update(new_data)
+
+    with open('data.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
     inp_web.delete(0, END)
     inp_passw.delete(0, END)
 # ---------------------------- UI SETUP ------------------------------- #
